@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+C:/tfvenv/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# TensorFlow models
+*.h5
+*.hdf5
+*.pb
+
+# Node modules (Frontend)
+node_modules/
+frontend/node_modules/
+
+# Build outputs
+frontend/build/
+frontend/dist/
+
+# Logs
+*.log
+logs/
+logs_*/
+Tensorboard/
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug images
+debug_images/
+backend/debug_images/
+
+# Package lock files (optional - some prefer to commit these)
+# package-lock.json
+# yarn.lock
