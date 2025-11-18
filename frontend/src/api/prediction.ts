@@ -1,7 +1,5 @@
-// API configuration
 const API_URL = 'http://localhost:5000';
 
-// Type definitions
 export type Mode = 'digit' | 'letter';
 
 export interface TopPrediction {
@@ -17,11 +15,8 @@ export interface PredictionResult {
   top_3?: TopPrediction[];
 }
 
-/**
- * Converts canvas drawing to base64 image with white background
- */
+
 export const canvasToBase64 = (canvas: HTMLCanvasElement): string => {
-  // Create a new canvas with white background
   const outputCanvas = document.createElement('canvas');
   outputCanvas.width = canvas.width;
   outputCanvas.height = canvas.height;
@@ -31,20 +26,15 @@ export const canvasToBase64 = (canvas: HTMLCanvasElement): string => {
     throw new Error('Failed to get canvas context');
   }
   
-  // Fill with white background
   ctx.fillStyle = '#FFFFFF';
   ctx.fillRect(0, 0, outputCanvas.width, outputCanvas.height);
   
-  // Draw the user's drawing on top
   ctx.drawImage(canvas, 0, 0);
   
-  // Convert to base64
   return outputCanvas.toDataURL('image/png');
 };
 
-/**
- * Sends prediction request to the backend API
- */
+
 export const predictCharacter = async (
   canvasData: string,
   mode: Mode

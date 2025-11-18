@@ -9,13 +9,12 @@ import base64
 import os
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for React frontend
+CORS(app) 
 
 # Global variables for models
 mnist_model = None
 emnist_model = None
 
-# Path to models (now in model/ folder)
 MODEL_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'model')
 MNIST_MODEL_PATH = os.path.join(MODEL_DIR, 'mnist_optimized.h5')
 EMNIST_MODEL_PATH = os.path.join(MODEL_DIR, 'emnist_optimized.h5')
@@ -61,10 +60,8 @@ def preprocess_image(image_data, target_size=(28, 28)):
         # Convert to grayscale
         image = image.convert('L')
         
-        # Resize to 28x28
         image = image.resize(target_size, Image.Resampling.LANCZOS)
         
-        # Convert to numpy array
         image_array = np.array(image)
         
         # Invert colors (MNIST uses white digits on black background)
@@ -73,10 +70,8 @@ def preprocess_image(image_data, target_size=(28, 28)):
         # Normalize to [0, 1]
         image_array = image_array.astype('float32') / 255.0
         
-        # Debug: Print some statistics about the processed image
         print(f"📸 Image stats: min={image_array.min():.3f}, max={image_array.max():.3f}, mean={image_array.mean():.3f}")
         
-        # Reshape to model input shape (1, 28, 28, 1)
         image_array = image_array.reshape(1, 28, 28, 1)
         
         return image_array
@@ -113,7 +108,6 @@ def predict_digit():
         if mnist_model is None:
             return jsonify({'error': 'MNIST model not loaded'}), 500
         
-        # Get image data from request
         data = request.get_json()
         if 'image' not in data:
             return jsonify({'error': 'No image data provided'}), 400
@@ -121,17 +115,14 @@ def predict_digit():
         print(f"\n🔍 Processing digit prediction...")
         print(f"📦 Received image data length: {len(data['image'])}")
         
-        # Preprocess image with debugging enabled
         image_array = preprocess_image(data['image'])
         if image_array is None:
             return jsonify({'error': 'Failed to process image'}), 400
         
-        # Make prediction
         predictions = mnist_model.predict(image_array, verbose=0)
         predicted_class = int(np.argmax(predictions[0]))
         confidence = float(predictions[0][predicted_class])
         
-        # Get top 3 predictions
         top_3_indices = np.argsort(predictions[0])[-3:][::-1]
         top_3_predictions = [
             {
@@ -160,7 +151,6 @@ def predict_letter():
         if emnist_model is None:
             return jsonify({'error': 'EMNIST model not loaded'}), 500
         
-        # Get image data from request
         data = request.get_json()
         if 'image' not in data:
             return jsonify({'error': 'No image data provided'}), 400
@@ -168,12 +158,10 @@ def predict_letter():
         print(f"\n🔍 Processing letter prediction...")
         print(f"📦 Received image data length: {len(data['image'])}")
         
-        # Preprocess image with debugging enabled
         image_array = preprocess_image(data['image'])
         if image_array is None:
             return jsonify({'error': 'Failed to process image'}), 400
         
-        # Make prediction
         predictions = emnist_model.predict(image_array, verbose=0)
         predicted_class = int(np.argmax(predictions[0]))
         confidence = float(predictions[0][predicted_class])
@@ -183,7 +171,6 @@ def predict_letter():
         letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
                    'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
         
-        # Check if model outputs 26 or 27 classes
         num_classes = len(predictions[0])
         print(f"📊 Model output shape: {num_classes} classes")
         print(f"🎯 Predicted class: {predicted_class}, Confidence: {confidence:.4f}")
@@ -195,7 +182,6 @@ def predict_letter():
             # Model uses 1-26 indexing (class 0 unused)
             predicted_letter = letters[predicted_class - 1] if 1 <= predicted_class <= 26 else '?'
         
-        # Get top 3 predictions
         top_3_indices = np.argsort(predictions[0])[-3:][::-1]
         top_3_predictions = []
         for idx in top_3_indices:
@@ -221,10 +207,8 @@ def predict_letter():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    # Load models at startup
     load_models()
     
-    # Run Flask app
     print("\n" + "="*60)
     print("🚀 Starting Flask API Server")
     print("="*60)

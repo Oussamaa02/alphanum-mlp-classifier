@@ -1,6 +1,5 @@
 """
 Script de Test Rapide - Vérification de l'Installation
-Exécutez ce script pour vérifier que tout est bien installé
 """
 
 import sys

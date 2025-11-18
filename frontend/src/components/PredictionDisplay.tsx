@@ -18,7 +18,6 @@ export const PredictionDisplay = ({ prediction, mode }: PredictionDisplayProps) 
         </p>
       </div>
 
-      {/* Top 3 Predictions */}
       {prediction.top_3 && (
         <div>
           <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">

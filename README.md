@@ -1,41 +1,114 @@
-# **Image Classification on MNIST and EMNIST Letters**
-The project is to train a deep neural network to classify images on MNIST and EMNIST datasets.
+# Handwritten Character Recognition
 
-**Summary of Accuracy on MNIST**
-- training accuracy: 99.92%
-- validation accuracy: 99.60%
-- test accuracy: 99.48%
+A complete web application that recognizes handwritten digits (0-9) and letters (A-Z) using deep learning. Draw on a canvas and get instant predictions!
 
-**Summary of Accuracy on EMNIST**
-- training accuracy: 98.7%
-- validation accuracy: 95.1%
-- test accuracy: 94.9%
+**Model Performance:**
+- Digits (MNIST): 99.18% accuracy
+- Letters (EMNIST): ~90-95% accuracy
 
-## Environment and Run Jupyter Notebook
+## Technologies Used
 
-* Tensorflow
-* Keras
-* Sklearn
-* scipy
-* numpy
-* cv2
-* matplotlib
+- **Machine Learning**: TensorFlow, Keras, NumPy
+- **Backend**: Flask, Pillow, flask-cors
+- **Frontend**: React, TypeScript, react-canvas-draw
+- **Data**: MNIST, EMNIST Datasets
 
-run "image-classification-mnist-emist.ipynb"
+### Running the Application
 
-## Vanishing Gradient Problem
-When training the neural network, during the backpropogation in each subsequent layer, the gradient in earlier layers get exponientially smaller and smaller ([vanishing](https://github.com/zmandyhe/image-classification-mnist-emnist-letters/blob/master/pic/vanishing-gradient.png)), which makes the network learning very little/slow to improve.  
+1. **Backend**
+```bash
+cd backend
+pip install -r requirements.txt
+python app.py
+```
 
-Potential Solutions include:
-- Batch normalization, which is to normalize the activations of the previous layer at each batch, i.e. applies a transformation that maintains the mean activation close to 0 and the activation standard deviation close to 1 to reduce the oscillations of in the distribution of activation. Deep network can be trained faster and better when the activation is normalized during backpropogation.
-- Use ReLu activation will normally solve the vanishing gradient problem (not sigmoid).
-- Using Regularization to modify cost function to penalize larger weights.
-- Use different weight initialization, mementum, etc.
-- Use more data.
-- Modify architecture.
+2. **Frontend**
+```bash
+cd frontend
+npm install
+npm start
+```
+
+## Model Training
+
+1. Open the Jupyter notebook:
+```bash
+jupyter notebook model/mnist_emnist_classification.ipynb
+```
+
+2. Make sure the kernel is configured to `C:\tfvenv\Scripts\python.exe`
+
+3. Execute all cells 
 
 
-## References
-* Michael Nielsen's [Neural Network and Deep Learning](http://neuralnetworksanddeeplearning.com/)
-* [Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift](https://arxiv.org/abs/1502.03167)
-* [Stanford course on Convolutional Neural Networks for Visual Recognition](http://cs231n.github.io/neural-networks-1/#actfun)
+## Project Structure
+
+```
+├── backend/               # Flask API server
+│   ├── app.py            # Main server file
+│   └── requirements.txt  # Python dependencies
+├── frontend/             # React web application
+│   ├── src/
+│   │   ├── App.tsx      # Main component
+│   │   └── App.css      # Styles
+│   └── package.json     # npm dependencies
+├── model/                # ML models and training
+│   ├── mnist_optimized.h5      # Digit recognition model
+│   ├── emnist_optimized.h5     # Letter recognition model
+│   ├── mnist_emnist_classification.ipynb  # Training notebook
+│   └── data/
+│       └── emnist-letters.mat  # EMNIST dataset
+└── README.md           
+```
+
+## Technical Details
+
+### Model Architecture
+```
+Input (28x28 grayscale image)
+    ↓
+Conv2D (32 filters, 3x3) + ReLU + BatchNorm + MaxPool
+    ↓
+Conv2D (64 filters, 3x3) + ReLU + BatchNorm + MaxPool + Dropout(0.5)
+    ↓
+Flatten
+    ↓
+Dense(1568) + ReLU + BatchNorm + Dropout(0.5)
+Dense(1000) + ReLU + BatchNorm + Dropout(0.5)
+Dense(700) + ReLU + BatchNorm + Dropout(0.5)
+Dense(300) + ReLU + BatchNorm + Dropout(0.5)
+Dense(100) + ReLU + BatchNorm
+    ↓
+Output (10 or 27 classes) + Softmax
+```
+
+### Image Preprocessing Pipeline
+```
+User draws a 280x280 image
+    ↓
+Convert to grayscale
+    ↓
+Resize to 28x28 (training data size)
+    ↓
+Invert colors (white digits on black background)
+    ↓
+Normalize pixel values to [0, 1]
+    ↓
+Reshape to (1, 28, 28, 1)
+    ↓
+Ready for prediction!
+```
+
+## Results
+
+**MNIST Digits:**
+- Training: 99.92%
+- Validation: 99.60%
+- Test: 99.18% (only 82 errors out of 10,000 images!)
+
+**EMNIST Letters:**
+- Training: 98.7%
+- Validation: 95.1%
+- Test: ~94.9%
+
+
