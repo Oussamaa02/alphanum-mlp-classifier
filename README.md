@@ -13,7 +13,7 @@ A complete web application that recognizes handwritten digits (0-9) and letters 
 - **Frontend**: Deploy to [Vercel](https://vercel.com) (free)
 - **Backend**: Deploy to [Railway](https://railway.app) or [Render](https://render.com) (free tiers available)
 
-📖 **[See Complete Deployment Guide →](./DEPLOYMENT.md)**
+📖 **[Complete Deployment Guide →](./DEPLOYMENT.md)** | ✅ **[Deployment Checklist →](./DEPLOYMENT_CHECKLIST.md)**
 
 ## Technologies Used
 
@@ -24,7 +24,31 @@ A complete web application that recognizes handwritten digits (0-9) and letters 
 
 ## Running Locally
 
-### Running the Application
+### Quick Setup (Recommended)
+
+Run the setup script to automatically configure both backend and frontend:
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+Then start the application in two separate terminals:
+
+**Terminal 1 (Backend):**
+```bash
+cd backend
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+python app.py
+```
+
+**Terminal 2 (Frontend):**
+```bash
+cd frontend
+npm start
+```
+
+### Manual Setup
 
 1. **Backend**
 ```bash
@@ -36,7 +60,7 @@ python app.py
 2. **Frontend**
 ```bash
 cd frontend
-npm install
+npm install --legacy-peer-deps
 npm start
 ```
 
