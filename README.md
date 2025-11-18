@@ -6,6 +6,15 @@ A complete web application that recognizes handwritten digits (0-9) and letters 
 - Digits (MNIST): 99.18% accuracy
 - Letters (EMNIST): ~90-95% accuracy
 
+## 🚀 Deployment
+
+**Ready to deploy?** This project can be deployed to free hosting platforms!
+
+- **Frontend**: Deploy to [Vercel](https://vercel.com) (free)
+- **Backend**: Deploy to [Railway](https://railway.app) or [Render](https://render.com) (free tiers available)
+
+📖 **[See Complete Deployment Guide →](./DEPLOYMENT.md)**
+
 ## Technologies Used
 
 - **Machine Learning**: TensorFlow, Keras, NumPy
@@ -13,13 +22,15 @@ A complete web application that recognizes handwritten digits (0-9) and letters 
 - **Frontend**: React, TypeScript, react-canvas-draw
 - **Data**: MNIST, EMNIST Datasets
 
+## Running Locally
+
 ### Running the Application
 
 1. **Backend**
 ```bash
 cd backend
 pip install -r requirements.txt
-C:\tfvenv\Scripts\python.exe app.py
+python app.py
 ```
 
 2. **Frontend**

@@ -8,8 +8,10 @@ Beautiful, simple interface for MNIST/EMNIST character recognition.
 
 ```bash
 cd frontend
-npm install
+npm install --legacy-peer-deps
 ```
+
+**Note**: Use `--legacy-peer-deps` due to React version compatibility with `react-canvas-draw`.
 
 ### 2. Start Development Server
 
@@ -21,12 +23,19 @@ The app will open at `http://localhost:3000`
 
 ## ⚙️ Configuration
 
-The backend API URL is set in `src/App.js`:
-```javascript
-const API_URL = 'http://localhost:5000';
+The backend API URL can be configured via environment variable:
+
+**Create a `.env` file in the frontend directory:**
+```bash
+REACT_APP_API_URL=http://localhost:5000
 ```
 
-Change this if your Flask backend runs on a different port.
+Or set it when starting the app:
+```bash
+REACT_APP_API_URL=http://localhost:5000 npm start
+```
+
+For production deployment, set this environment variable on your hosting platform (e.g., Vercel).
 
 ## 📝 Features
 
@@ -40,7 +49,9 @@ Change this if your Flask backend runs on a different port.
 ## 🛠️ Technologies
 
 - **React 18** - UI framework
+- **TypeScript** - Type safety
 - **react-canvas-draw** - Drawing canvas library
+- **Tailwind CSS** - Styling
 - **Fetch API** - HTTP requests to backend
 
 ## 📦 Build for Production
@@ -51,15 +62,22 @@ npm run build
 
 This creates an optimized production build in the `build/` folder.
 
+## 🚀 Deployment
+
+See [DEPLOYMENT.md](../DEPLOYMENT.md) for detailed deployment instructions to free hosting platforms like Vercel.
+
 ## 🐛 Troubleshooting
+
+**Installation errors:**
+- Use `npm install --legacy-peer-deps` to resolve peer dependency conflicts
 
 **Canvas not drawing:**
 - Check if `react-canvas-draw` is installed: `npm list react-canvas-draw`
-- Reinstall: `npm install react-canvas-draw`
+- Reinstall: `npm install react-canvas-draw --legacy-peer-deps`
 
 **CORS errors:**
 - Make sure Flask backend has CORS enabled (`flask-cors` installed)
-- Check that backend is running on `http://localhost:5000`
+- Check that `REACT_APP_API_URL` environment variable is set correctly
 
 **Prediction not working:**
 - Open browser console (F12) to see error messages
@@ -68,32 +86,19 @@ This creates an optimized production build in the `build/` folder.
 
 ## 🎨 Customization
 
-### Change Colors
-
-Edit `src/App.css`:
-```css
-.mode-button.active {
-  background: linear-gradient(135deg, #YOUR_COLOR_1 0%, #YOUR_COLOR_2 100%);
-}
-```
-
 ### Change Canvas Size
 
-Edit `src/App.js`:
-```javascript
+Edit `src/App.tsx`:
+```typescript
 <CanvasDraw
-  canvasWidth={280}  // Change this
-  canvasHeight={280} // Change this
+  canvasWidth={450}  // Change this
+  canvasHeight={450} // Change this
   brushRadius={8}    // Change brush size
 />
 ```
 
-## 📱 Screenshots
-
-[Add screenshots of your app here]
-
 ## 🎯 Next Steps
 
-- Deploy frontend to Netlify/Vercel
-- Deploy backend to Heroku/Railway
+- Deploy frontend to Vercel (free) - See [DEPLOYMENT.md](../DEPLOYMENT.md)
+- Deploy backend to Railway/Render (free) - See [DEPLOYMENT.md](../DEPLOYMENT.md)
 - Add more features (save drawings, history, etc.)
