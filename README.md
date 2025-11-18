@@ -19,7 +19,7 @@ A complete web application that recognizes handwritten digits (0-9) and letters 
 ```bash
 cd backend
 pip install -r requirements.txt
-python app.py
+C:\tfvenv\Scripts\python.exe app.py
 ```
 
 2. **Frontend**
